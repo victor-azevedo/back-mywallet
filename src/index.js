@@ -25,7 +25,6 @@ const loginSchema = Joi.object({
 
 const movementTypes = ["revenue", "expense"];
 const movementSchema = Joi.object({
-  userId: Joi.string().required(),
   value: Joi.number().required(),
   description: Joi.string().min(4).max(30).required(),
   type: Joi.alternatives().try(...movementTypes),
@@ -109,6 +108,40 @@ app.post("/sign-in", async (req, res) => {
     } else {
       return res.sendStatus(401);
     }
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+app.post("/movements", async (req, res) => {
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+  const { value, description, type } = req.body;
+
+  if (!token) return res.sendStatus(401);
+
+  const movementation = { value: Number(value).toFixed(2), description, type };
+  const { error } = movementSchema.validate(movementation, {
+    abortEarly: false,
+  });
+  if (error) {
+    console.log(error.details.map((detail) => detail.message));
+    res.sendStatus(422);
+    return;
+  }
+
+  try {
+    const session = await sessionsCollection.findOne({ token });
+    if (!session) {
+      return res.sendStatus(401);
+    }
+
+    await movementsCollection.insertOne({
+      userId: session.userId,
+      ...movementation,
+    });
+    res.sendStatus(201);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
