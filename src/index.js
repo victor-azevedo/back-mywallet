@@ -4,6 +4,7 @@ import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import Joi from "joi";
 import bcrypt from "bcrypt";
+import { v4 as uuid } from "uuid";
 dotenv.config();
 
 const app = express();
@@ -57,7 +58,7 @@ app.post("/sign-up", async (req, res) => {
   }
 
   try {
-    const newUserFind = await usersCollection.findOne({ email: email });
+    const newUserFind = await usersCollection.findOne({ email });
     if (newUserFind) {
       return res.sendStatus(409);
     }
@@ -73,6 +74,45 @@ app.post("/sign-up", async (req, res) => {
     res.sendStatus(500);
   }
   res.sendStatus(201);
+});
+
+app.post("/sign-in", async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = { email, password };
+  const { error } = loginSchema.validate(user, { abortEarly: false });
+  if (error) {
+    console.log(error.details.map((detail) => detail.message));
+    res.sendStatus(422);
+    return;
+  }
+
+  try {
+    const userFind = await usersCollection.findOne({ email });
+
+    if (userFind && bcrypt.compareSync(password, userFind.password)) {
+      delete userFind.password;
+
+      const isUserLogged = await sessionsCollection.findOne({
+        userId: userFind._id,
+      });
+      if (isUserLogged) {
+        return res.send({ ...userFind, token: isUserLogged.token });
+      }
+
+      const token = uuid();
+      await sessionsCollection.insertOne({
+        token,
+        userId: userFind._id,
+      });
+      return res.send({ ...userFind, token });
+    } else {
+      return res.sendStatus(401);
+    }
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
 });
 
 app.listen(process.env.API_PORT, () => {
