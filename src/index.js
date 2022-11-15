@@ -21,11 +21,11 @@ const loginSchema = Joi.object({
   password: Joi.string().required().min(6).max(12),
 });
 
-const movimentTypes = ["revenue", "expense"];
-const movimentSchema = Joi.object({
+const movementTypes = ["revenue", "expense"];
+const movementSchema = Joi.object({
   value: Joi.string().email().required(),
   description: Joi.string().required().min(4).max(30),
-  type: Joi.alternatives().try(...movimentTypes),
+  type: Joi.alternatives().try(...movementTypes),
 });
 
 const mongoClient = new MongoClient(process.env.MONGO_URI);
@@ -39,6 +39,9 @@ mongoClient
   });
 
 const db = mongoClient.db("myWallet");
+const usersCollection = db.collection("users");
+const movementsCollection = db.collection("movements");
+const sessionsCollection = db.collection("sessions");
 
 app.listen(process.env.API_PORT, () => {
   console.log(`Server listening on PORT ${process.env.PORT}`);
