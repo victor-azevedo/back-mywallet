@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 const registerSchema = Joi.object({
-  name: Joi.string().alphanum().min(3).max(20).required(),
+  name: Joi.string().min(3).max(20).required(),
   email: Joi.string().email().required(),
   password: Joi.string().required().min(6).max(12),
   repeatPassword: Joi.ref("password"),
@@ -23,8 +23,9 @@ const loginSchema = Joi.object({
 
 const movementTypes = ["revenue", "expense"];
 const movementSchema = Joi.object({
-  value: Joi.string().email().required(),
-  description: Joi.string().required().min(4).max(30),
+  userId: Joi.string().required(),
+  value: Joi.number().required(),
+  description: Joi.string().min(4).max(30).required(),
   type: Joi.alternatives().try(...movementTypes),
 });
 
