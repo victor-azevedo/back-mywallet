@@ -148,6 +148,28 @@ app.post("/movements", async (req, res) => {
   }
 });
 
+app.get("/movements", async (req, res) => {
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+
+  if (!token) return res.sendStatus(401);
+
+  try {
+    const session = await sessionsCollection.findOne({ token });
+    if (!session) {
+      return res.sendStatus(401);
+    }
+
+    const movementsUser = await movementsCollection
+      .find({ userId: session.userId })
+      .toArray();
+    res.status(200).send(movementsUser);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 app.listen(process.env.API_PORT, () => {
   console.log(`Server listening on PORT ${process.env.PORT}`);
 });
