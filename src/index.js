@@ -170,6 +170,26 @@ app.get("/movements", async (req, res) => {
   }
 });
 
+app.delete("/logout", async (req, res) => {
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+
+  if (!token) return res.sendStatus(401);
+
+  try {
+    const session = await sessionsCollection.findOne({ token });
+    if (!session) {
+      return res.sendStatus(401);
+    }
+
+    await sessionsCollection.deleteOne({ token });
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 app.listen(process.env.API_PORT, () => {
   console.log(`Server listening on PORT ${process.env.PORT}`);
 });
