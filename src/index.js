@@ -169,7 +169,23 @@ app.get("/transactions", async (req, res) => {
     const transactionsUser = await transactionsCollection
       .find({ userId: session.userId })
       .toArray();
-    res.status(200).send(transactionsUser);
+
+    const values = transactionsUser.map((transaction) => {
+      if (transaction.type === "incoming") {
+        return Number(transaction.value);
+      } else if (transaction.type === "outgoing") {
+        return Number(-transaction.value);
+      }
+    });
+
+    const balance = values.reduce((acc, value) => acc + value).toFixed(2);
+    transactionsUser.forEach((transaction) => delete transaction.userId);
+
+    res.status(200).send({
+      userId: session.userId,
+      balance,
+      transactions: transactionsUser,
+    });
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
