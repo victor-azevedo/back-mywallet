@@ -23,11 +23,11 @@ const loginSchema = Joi.object({
   password: Joi.string().required().min(6).max(12),
 });
 
-const movementTypes = ["revenue", "expense"];
-const movementSchema = Joi.object({
+const transactionTypes = ["incoming", "outgoing"];
+const transactionSchema = Joi.object({
   value: Joi.number().required(),
   description: Joi.string().min(4).max(30).required(),
-  type: Joi.alternatives().try(...movementTypes),
+  type: Joi.alternatives().try(...transactionTypes),
   date: Joi.date().iso().required(),
 });
 
@@ -43,7 +43,7 @@ mongoClient
 
 const db = mongoClient.db("myWallet");
 const usersCollection = db.collection("users");
-const movementsCollection = db.collection("movements");
+const transactionsCollection = db.collection("transactions");
 const sessionsCollection = db.collection("sessions");
 
 app.post("/sign-up", async (req, res) => {
@@ -115,20 +115,20 @@ app.post("/sign-in", async (req, res) => {
   }
 });
 
-app.post("/movements", async (req, res) => {
+app.post("/transactions", async (req, res) => {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
   const { value, description, type, date } = req.body;
 
   if (!token) return res.sendStatus(401);
 
-  const movementation = {
+  const transaction = {
     value: Number(value).toFixed(2),
     description,
     type,
     date,
   };
-  const { error } = movementSchema.validate(movementation, {
+  const { error } = transactionSchema.validate(transaction, {
     abortEarly: false,
   });
   if (error) {
@@ -143,9 +143,9 @@ app.post("/movements", async (req, res) => {
       return res.sendStatus(401);
     }
 
-    await movementsCollection.insertOne({
+    await transactionsCollection.insertOne({
       userId: session.userId,
-      ...movementation,
+      ...transaction,
     });
     res.sendStatus(201);
   } catch (error) {
@@ -154,7 +154,7 @@ app.post("/movements", async (req, res) => {
   }
 });
 
-app.get("/movements", async (req, res) => {
+app.get("/transactions", async (req, res) => {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
 
@@ -166,10 +166,10 @@ app.get("/movements", async (req, res) => {
       return res.sendStatus(401);
     }
 
-    const movementsUser = await movementsCollection
+    const transactionsUser = await transactionsCollection
       .find({ userId: session.userId })
       .toArray();
-    res.status(200).send(movementsUser);
+    res.status(200).send(transactionsUser);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
