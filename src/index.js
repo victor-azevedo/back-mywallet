@@ -28,6 +28,7 @@ const movementSchema = Joi.object({
   value: Joi.number().required(),
   description: Joi.string().min(4).max(30).required(),
   type: Joi.alternatives().try(...movementTypes),
+  date: Joi.date().iso().required(),
 });
 
 const mongoClient = new MongoClient(process.env.MONGO_URI);
@@ -117,11 +118,16 @@ app.post("/sign-in", async (req, res) => {
 app.post("/movements", async (req, res) => {
   const { authorization } = req.headers;
   const token = authorization?.replace("Bearer ", "");
-  const { value, description, type } = req.body;
+  const { value, description, type, date } = req.body;
 
   if (!token) return res.sendStatus(401);
 
-  const movementation = { value: Number(value).toFixed(2), description, type };
+  const movementation = {
+    value: Number(value).toFixed(2),
+    description,
+    type,
+    date,
+  };
   const { error } = movementSchema.validate(movementation, {
     abortEarly: false,
   });
