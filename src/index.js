@@ -178,7 +178,7 @@ app.get("/transactions", async (req, res) => {
       }
     });
 
-    const balance = values.reduce((acc, value) => acc + value).toFixed(2);
+    const balance = values.reduce((acc, value) => acc + value, 0).toFixed(2);
     transactionsUser.forEach((transaction) => delete transaction.userId);
 
     res.status(200).send({
