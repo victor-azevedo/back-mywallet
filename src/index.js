@@ -96,16 +96,23 @@ app.post("/sign-in", async (req, res) => {
       const isUserLogged = await sessionsCollection.findOne({
         userId: userFind._id,
       });
+      let token = "";
       if (isUserLogged) {
-        return res.send({ ...userFind, token: isUserLogged.token });
+        token = isUserLogged.token;
+      } else {
+        token = uuid();
+        await sessionsCollection.insertOne({
+          token,
+          userId: userFind._id,
+        });
       }
 
-      const token = uuid();
-      await sessionsCollection.insertOne({
+      return res.send({
+        id: userFind._id,
+        username: userFind.username,
+        email: userFind.email,
         token,
-        userId: userFind._id,
       });
-      return res.send({ ...userFind, token });
     } else {
       return res.sendStatus(401);
     }
