@@ -2,16 +2,15 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import Joi from "joi";
-import { registerUser, login, logout } from "./controllers/usersController.js";
-import {
-  addTransaction,
-  getTransactions,
-} from "./controllers/transactionsControllers.js";
+import usersRoutes from "./routes/usersRoutes.js";
+import transactionsRoutes from "./routes/transactionsRoutes.js";
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(usersRoutes);
+app.use(transactionsRoutes);
 
 export const registerSchema = Joi.object({
   username: Joi.string().min(3).max(20).required(),
@@ -32,16 +31,6 @@ export const transactionSchema = Joi.object({
   type: Joi.alternatives().try(...transactionTypes),
   date: Joi.date().iso().required(),
 });
-
-app.post("/sign-up", registerUser);
-
-app.post("/sign-in", login);
-
-app.delete("/logout", logout);
-
-app.post("/transactions", addTransaction);
-
-app.get("/transactions", getTransactions);
 
 app.listen(process.env.API_PORT, () => {
   console.log(`Server listening on PORT ${process.env.PORT}`);
