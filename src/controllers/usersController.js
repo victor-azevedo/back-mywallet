@@ -1,18 +1,10 @@
 import { usersCollection, sessionsCollection } from "../database/db.js";
-import { registerSchema, loginSchema } from "../models/usersModels.js";
+import { loginSchema } from "../models/usersModels.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 
 export async function registerUser(req, res) {
-  const { username, email, password, repeatPassword } = req.body;
-
-  const newUser = { username, email, password, repeatPassword };
-  const { error } = registerSchema.validate(newUser, { abortEarly: false });
-  if (error) {
-    console.log(error.details.map((detail) => detail.message));
-    res.sendStatus(422);
-    return;
-  }
+  const { username, email, password } = res.locals.newUser;
 
   try {
     const newUserFind = await usersCollection.findOne({ email });
