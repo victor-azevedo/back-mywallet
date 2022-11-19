@@ -1,10 +1,14 @@
 import express from "express";
 import cors from "cors";
-import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import Joi from "joi";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
+import {
+  usersCollection,
+  transactionsCollection,
+  sessionsCollection,
+} from "./database/db.js";
 dotenv.config();
 
 const app = express();
@@ -30,21 +34,6 @@ const transactionSchema = Joi.object({
   type: Joi.alternatives().try(...transactionTypes),
   date: Joi.date().iso().required(),
 });
-
-const mongoClient = new MongoClient(process.env.MONGO_URI);
-mongoClient
-  .connect()
-  .then(() => {
-    console.log("Connected successfully to data server");
-  })
-  .catch(() => {
-    console.error("ERROR: Not connected to data server");
-  });
-
-const db = mongoClient.db("myWallet");
-const usersCollection = db.collection("users");
-const transactionsCollection = db.collection("transactions");
-const sessionsCollection = db.collection("sessions");
 
 app.post("/sign-up", async (req, res) => {
   const { username, email, password, repeatPassword } = req.body;
