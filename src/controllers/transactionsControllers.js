@@ -1,5 +1,5 @@
 import { transactionsCollection, sessionsCollection } from "../database/db.js";
-import { transactionSchema } from "../index.js";
+import { transactionSchema } from "../models/transactionsModels.js";
 
 export async function addTransaction(req, res) {
   const { authorization } = req.headers;

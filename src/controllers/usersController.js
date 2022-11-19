@@ -1,5 +1,5 @@
 import { usersCollection, sessionsCollection } from "../database/db.js";
-import { registerSchema, loginSchema } from "../index.js";
+import { registerSchema, loginSchema } from "../models/usersModels.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 
