@@ -80,18 +80,9 @@ export async function login(req, res) {
 }
 
 export async function logout(req, res) {
-  const { authorization } = req.headers;
-  const token = authorization?.replace("Bearer ", "");
-
-  if (!token) return res.sendStatus(401);
-
+  const user = res.locals.user;
   try {
-    const session = await sessionsCollection.findOne({ token });
-    if (!session) {
-      return res.sendStatus(401);
-    }
-
-    await sessionsCollection.deleteOne({ token });
+    await sessionsCollection.deleteOne({ userId: user?._id });
     res.sendStatus(200);
   } catch (error) {
     console.log(error);

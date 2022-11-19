@@ -1,12 +1,9 @@
-import { transactionsCollection, sessionsCollection } from "../database/db.js";
+import { transactionsCollection } from "../database/db.js";
 import { transactionSchema } from "../models/transactionsModels.js";
 
 export async function addTransaction(req, res) {
-  const { authorization } = req.headers;
-  const token = authorization?.replace("Bearer ", "");
+  const user = res.locals.user;
   const { value, description, type, date } = req.body;
-
-  if (!token) return res.sendStatus(401);
 
   const transaction = {
     value: Number(value).toFixed(2),
@@ -24,13 +21,8 @@ export async function addTransaction(req, res) {
   }
 
   try {
-    const session = await sessionsCollection.findOne({ token });
-    if (!session) {
-      return res.sendStatus(401);
-    }
-
     await transactionsCollection.insertOne({
-      userId: session.userId,
+      userId: user?._id,
       ...transaction,
     });
     res.sendStatus(201);
@@ -41,19 +33,11 @@ export async function addTransaction(req, res) {
 }
 
 export async function getTransactions(req, res) {
-  const { authorization } = req.headers;
-  const token = authorization?.replace("Bearer ", "");
-
-  if (!token) return res.sendStatus(401);
+  const user = res.locals.user;
 
   try {
-    const session = await sessionsCollection.findOne({ token });
-    if (!session) {
-      return res.sendStatus(401);
-    }
-
     const transactionsUser = await transactionsCollection
-      .find({ userId: session.userId })
+      .find({ userId: user?._id })
       .toArray();
 
     const values = transactionsUser.map((transaction) => {
@@ -68,7 +52,7 @@ export async function getTransactions(req, res) {
     transactionsUser.forEach((transaction) => delete transaction.userId);
 
     res.status(200).send({
-      userId: session.userId,
+      userId: user._id,
       balance,
       transactions: transactionsUser,
     });
