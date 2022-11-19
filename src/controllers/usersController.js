@@ -1,5 +1,4 @@
 import { usersCollection, sessionsCollection } from "../database/db.js";
-import { loginSchema } from "../models/usersModels.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 
@@ -26,15 +25,7 @@ export async function registerUser(req, res) {
 }
 
 export async function login(req, res) {
-  const { email, password } = req.body;
-
-  const user = { email, password };
-  const { error } = loginSchema.validate(user, { abortEarly: false });
-  if (error) {
-    console.log(error.details.map((detail) => detail.message));
-    res.sendStatus(422);
-    return;
-  }
+  const { email, password } = res.locals.user;
 
   try {
     const userFind = await usersCollection.findOne({ email });
