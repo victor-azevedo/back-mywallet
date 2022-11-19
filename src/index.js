@@ -12,5 +12,5 @@ app.use(usersRoutes);
 app.use(transactionsRoutes);
 
 app.listen(process.env.API_PORT, () => {
-  console.log(`Server listening on PORT ${process.env.PORT}`);
+  console.log(`Server listening on PORT ${process.env.API_PORT}`);
 });
