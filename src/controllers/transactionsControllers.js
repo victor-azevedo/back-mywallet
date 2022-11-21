@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { transactionsCollection } from "../database/db.js";
 import { transactionSchema } from "../models/transactionsModels.js";
 
@@ -56,6 +57,21 @@ export async function getTransactions(req, res) {
       balance,
       transactions: transactionsUser,
     });
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+}
+
+export async function deleteTransactions(req, res) {
+  const transactionId = res.locals.transactionId;
+
+  try {
+    await transactionsCollection.deleteOne({
+      _id: new ObjectId(transactionId),
+    });
+
+    res.sendStatus(200);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

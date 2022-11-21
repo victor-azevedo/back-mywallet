@@ -5,7 +5,7 @@ export async function authValidation(req, res, next) {
   const token = authorization?.replace("Bearer ", "");
 
   if (!token) {
-    return res.sendStatus(401);
+    return res.status(401).send({ message: "Authorization inexistente" });
   }
 
   try {
@@ -14,7 +14,9 @@ export async function authValidation(req, res, next) {
     delete user?.password;
 
     if (!user) {
-      return res.sendStatus(401);
+      return res
+        .status(401)
+        .send({ message: "Usuário não logado ou inexiste" });
     }
 
     res.locals.user = user;

@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { registerUser, login, logout } from "../controllers/usersController.js";
-import { authValidation } from "../middlewares/authValidationMiddleware.js";
-import { loginSchemaValidationMiddleware } from "../middlewares/loginSchemaValidationMiddleware.js";
-import { registerSchemaValidationMiddleware } from "../middlewares/registerSchemaValidationMiddleware.js";
+import { authValidation } from "../middleware/authValidationMiddleware.js";
+import { loginSchemaValidationMiddleware } from "../middleware/loginSchemaValidationMiddleware.js";
+import { registerSchemaValidationMiddleware } from "../middleware/registerSchemaValidationMiddleware.js";
 
 const router = Router();
 
