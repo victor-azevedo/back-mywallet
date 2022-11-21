@@ -61,3 +61,25 @@ export async function deleteTransactions(req, res) {
     res.sendStatus(500);
   }
 }
+
+export async function editTransactions(req, res) {
+  const transactionId = res.locals.transactionId;
+  const transaction = res.locals.transaction;
+  const user = res.locals.user;
+
+  try {
+    const transactionQuery = { _id: new ObjectId(transactionId) };
+    const transactionReplace = {
+      userId: user?._id,
+      ...transaction,
+    };
+    await transactionsCollection.replaceOne(
+      transactionQuery,
+      transactionReplace
+    );
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+}

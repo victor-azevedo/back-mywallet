@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   addTransaction,
   deleteTransactions,
+  editTransactions,
   getTransactions,
 } from "../controllers/transactionsControllers.js";
 import { authValidation } from "../middleware/authValidationMiddleware.js";
@@ -18,6 +19,12 @@ router.delete(
   "/transactions/:id",
   checkUserTransactionsMiddleware,
   deleteTransactions
+);
+router.put(
+  "/transactions/:id",
+  transactionSchemaValidation,
+  checkUserTransactionsMiddleware,
+  editTransactions
 );
 
 export default router;
