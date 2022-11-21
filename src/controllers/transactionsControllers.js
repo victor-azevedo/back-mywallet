@@ -1,26 +1,10 @@
 import { ObjectId } from "mongodb";
 import { transactionsCollection } from "../database/db.js";
-import { transactionSchema } from "../models/transactionsModels.js";
 
 export async function addTransaction(req, res) {
   const user = res.locals.user;
-  const { value, description, type, date } = req.body;
-
-  const transaction = {
-    value: Number(value).toFixed(2),
-    description,
-    type,
-    date,
-  };
-  const { error } = transactionSchema.validate(transaction, {
-    abortEarly: false,
-  });
-  if (error) {
-    console.log(error.details.map((detail) => detail.message));
-    res.sendStatus(422);
-    return;
-  }
-
+  const transaction = res.locals.transaction;
+  console.log(transaction);
   try {
     await transactionsCollection.insertOne({
       userId: user?._id,
