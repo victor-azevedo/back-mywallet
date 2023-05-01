@@ -5,8 +5,8 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "dev": "nodemon ./src/index.js",
-    "start": "node ./src/index.js"
+    "dev": "cross-env nodemon ./src/index.js",
+    "start": "cross-env node ./src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +22,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.20"
   }
 }
