@@ -23,7 +23,7 @@ Have Node.js (recommended version: 16.20.0) and MongoDB (recommended version: 6.
 npm i
 ```
 
-3. Create `.env` file based in and `.env.example`;
+3. Create a `.env` file based in `.env.example`;
 4. Run the back-end as development:
 
 ```bash
