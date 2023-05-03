@@ -38,7 +38,8 @@ Application will run in default PORT 4000.
 
 Have Docker and Docker Compose installed.
 
-1. Run Docker Compose file:
+1. Clone this repository;
+2. Run Docker Compose file:
 
 ```bash
 sudo docker compose up
