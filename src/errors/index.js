@@ -27,3 +27,10 @@ export function UnprocessableEntityError(message = "Unprocessable Entity") {
   this.message = message;
   this.status = 422;
 }
+
+export function handleRequestError(res, error) {
+  console.log(error);
+  return res
+    .status(error.status || 500)
+    .send(error.message || "Internal server error");
+}
