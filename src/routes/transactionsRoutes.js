@@ -5,7 +5,7 @@ import {
   editTransactions,
   getTransactions,
 } from "../controllers/transactionsControllers.js";
-import { authValidation } from "../middleware/authValidationMiddleware.js";
+import { authValidation } from "../middleware/authValidation-middleware.js";
 import { checkUserTransactionsMiddleware } from "../middleware/checkUserTransactionsMiddleware.js";
 import { transactionSchemaValidation } from "../middleware/transactionsSchemaValidationMiddleware.js";
 
