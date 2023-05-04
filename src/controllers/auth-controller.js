@@ -7,8 +7,7 @@ async function registerUser(req, res) {
     await authService.registerUser(userToRegister);
     return res.sendStatus(201);
   } catch (error) {
-    console.log(error);
-    return res.sendStatus(error.status || 500);
+    handleRequestError(res, error);
   }
 }
 
@@ -19,8 +18,7 @@ async function login(req, res) {
     const token = await authService.login(userToLogin);
     return res.status(201).send({ token });
   } catch (error) {
-    console.log(error);
-    return res.sendStatus(error.status || 500);
+    handleRequestError(res, error);
   }
 }
 
