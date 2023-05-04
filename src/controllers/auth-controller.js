@@ -1,3 +1,4 @@
+import { handleRequestError } from "../errors/index.js";
 import { authService } from "../services/auth-service.js";
 
 async function registerUser(req, res) {
