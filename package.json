@@ -6,13 +6,15 @@
   "main": "./src/index.js",
   "scripts": {
     "dev": "cross-env nodemon ./src/index.js",
-    "start": "cross-env node ./src/index.js"
+    "start": "cross-env node ./src/index.js",
+    "swagger-autogen": "node swagger.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dayjs": "^1.11.6",
     "dotenv": "^16.0.3",
@@ -20,7 +22,9 @@
     "express-async-errors": "^3.1.1",
     "joi": "^17.7.0",
     "jsonwebtoken": "^9.0.0",
-    "mongodb": "^4.11.0"
+    "mongodb": "^4.11.0",
+    "swagger-autogen": "^2.23.1",
+    "swagger-ui-express": "^4.6.2"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
