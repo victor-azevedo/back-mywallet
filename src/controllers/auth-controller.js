@@ -28,7 +28,7 @@ async function registerUser(req, res) {
 
 async function login(req, res) {
   /*
-    #swagger.tags = ['Users']
+    #swagger.tags = ['Sessions']
     #swagger.description = 'Route for user login.'   
     #swagger.parameters['obj'] = {
       in: 'body',

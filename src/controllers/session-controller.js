@@ -3,7 +3,7 @@ import { sessionService } from "../services/session-service.js";
 
 async function logout(req, res) {
   /*
-    #swagger.tags = ['Users']
+    #swagger.tags = ['Sessions']
   */
 
   const token = res.locals.token;
