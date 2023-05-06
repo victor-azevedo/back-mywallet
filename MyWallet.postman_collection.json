@@ -33,7 +33,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"valueAtCents\": 100,\n  \"description\": \"Salario\",\n  \"type\": \"incoming\",\n  \"date\": \"2022-02-01T03:00:00.000Z\"\n}",
+							"raw": "{\n  \"valueInCents\": 100,\n  \"description\": \"Salario\",\n  \"type\": \"incoming\",\n  \"date\": \"2022-02-01T03:00:00.000Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -59,7 +59,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n//   \"valueAtCents\": 300,\n//   \"description\": \"Salario\",\n//   \"type\": \"incoming\",\n//   \"date\": \"2022-02-01T03:00:00.000Z\"\n}",
+							"raw": "{\n//   \"valueInCents\": 300,\n//   \"description\": \"Salario\",\n//   \"type\": \"incoming\",\n//   \"date\": \"2022-02-01T03:00:00.000Z\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

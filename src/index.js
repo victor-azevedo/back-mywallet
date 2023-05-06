@@ -12,13 +12,13 @@ import sessionRouter from "./routes/session-routes.js";
 import transactionsRoutes from "./routes/transaction-routes.js";
 
 dotenv.config();
+const app = express();
+app.use(cors());
 
 const jsonString = fs.readFileSync("swagger/swagger_output.json");
 const swaggerFile = JSON.parse(jsonString);
 
-const app = express();
 app
-  .use(cors())
   .use(express.json())
   .use(bodyParser.urlencoded({ extended: false }))
   .use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile))

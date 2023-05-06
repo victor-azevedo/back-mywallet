@@ -2,6 +2,19 @@ import { handleRequestError } from "../errors/index.js";
 import { transactionsService } from "../services/transaction-service.js";
 
 export async function addUserTransaction(req, res) {
+  /*
+    #swagger.tags = ['Transactions']
+    #swagger.description = 'Route to add user transactions.'
+    #swagger.parameters['obj'] = {
+      in: 'body',
+      name: 'Add Transactions',
+      description: 'Data to add a user transaction',
+      required: true,
+      schema: {
+        $ref: '#/definitions/transactionCreateSchemaSwagger',
+      },
+    },   
+  */
   const { userId } = res.locals.user;
   const transactionData = req.body;
 
@@ -15,11 +28,16 @@ export async function addUserTransaction(req, res) {
 }
 
 export async function getAllUserTransactions(req, res) {
+  /*
+    #swagger.tags = ['Transactions']
+    #swagger.description = 'Route to get all user transactions and balance.'    
+    },   
+  */
   const { userId } = res.locals.user;
 
   try {
     const transactionsUser = await transactionsService.getByUserId(userId);
-    res.send(transactionsUser);
+    res.status(200).send(transactionsUser);
   } catch (error) {
     handleRequestError(res, error);
   }
@@ -27,6 +45,18 @@ export async function getAllUserTransactions(req, res) {
 }
 
 export async function deleteUserTransaction(req, res) {
+  /*
+    #swagger.tags = ['Transactions']
+    #swagger.description = 'Route to delete a user transaction.'    
+    #swagger.parameters['id'] = {
+      in: 'path',
+      description: 'Transaction ID',
+      required: true,
+      schema: {
+        $ref: '#/definitions/transactionParamsSchemaSwagger',
+      },
+    },   
+  */
   const { userId } = res.locals.user;
   const { id } = req.params;
 
@@ -40,6 +70,27 @@ export async function deleteUserTransaction(req, res) {
 }
 
 export async function updateUserTransaction(req, res) {
+  /*
+    #swagger.tags = ['Transactions']
+    #swagger.description = 'Route to update a user transaction.'
+    #swagger.parameters['id'] = {
+      in: 'path',
+      description: 'Transaction ID',
+      required: true,
+      schema: {
+        $ref: '#/definitions/transactionParamsSchemaSwagger',
+      },
+    },   
+    #swagger.parameters['obj'] = {
+      in: 'body',
+      name: 'Update a Transaction',
+      description: 'Data to update a user transaction',
+      required: true,
+      schema: {
+        $ref: '#/definitions/transactionUpdateSchemaSwagger',
+      },
+    },
+  */
   const { userId } = res.locals.user;
   const { id } = req.params;
   const transactionData = req.body;

@@ -2,6 +2,10 @@ import { handleRequestError } from "../errors/index.js";
 import { sessionService } from "../services/session-service.js";
 
 async function logout(req, res) {
+  /*
+    #swagger.tags = ['Users']
+  */
+
   const token = res.locals.token;
 
   try {

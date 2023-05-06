@@ -27,7 +27,7 @@ async function getUserBalance(userId) {
       {
         $group: {
           _id: "$type",
-          total: { $sum: "$valueAtCents" },
+          total: { $sum: "$valueInCents" },
         },
       },
       {
