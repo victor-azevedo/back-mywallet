@@ -61,7 +61,8 @@ sudo docker compose up
 ```
 
 Application default PORT: 4000.
-A folder data/ will be created as mongo container volume.
+
+A folder `data/` will be created as mongo container volume.
 
 ## Documentation
 
