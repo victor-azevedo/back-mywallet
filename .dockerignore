@@ -1,0 +1,14 @@
+.vscode/
+data/
+doc/
+node_modules/
+
+.env*
+
+.gitignore
+LICENSE
+*.md
+*.postman_collection.json
+
+Dockerfile
+docker-compose.yml

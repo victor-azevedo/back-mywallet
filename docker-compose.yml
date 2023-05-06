@@ -3,17 +3,24 @@ services:
   app:
     container_name: my-wallet-app
     build: .
-    ports:
-      - "4000:4000"
     environment:
-      - MONGO_URI=mongodb://mongo:27018
+      - API_HOST
+      - API_PORT
+      - MONGO_HOST=mongodb://mongo
+      - MONGO_PORT
+      - JWT_SECRET
+    ports:
+      - "${API_PORT}:${API_PORT}"
     depends_on:
       - mongo
   mongo:
     container_name: my-wallet-db
     image: mongo:6.0.5
-    command: mongod --port 27018
+    environment:
+      - MONGO_PORT
+    command: mongod --port ${MONGO_PORT}
     ports:
-      - "27018:27018"
+      - ${MONGO_PORT}:${MONGO_PORT}
+    restart: always
     volumes:
       - ./data:/data/db
