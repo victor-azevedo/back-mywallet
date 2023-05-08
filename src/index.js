@@ -25,6 +25,7 @@ app
   .use(express.json())
   .use(bodyParser.urlencoded({ extended: false }))
   .use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile, swaggerOptions))
+  .get("/health", (req, res) => res.send("Server is Ok!!!"))
   .use("/auth", authRouter)
   .use("/logout", sessionRouter)
   .use("/transactions", transactionsRoutes)
