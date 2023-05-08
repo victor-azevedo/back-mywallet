@@ -14,7 +14,8 @@ import {
 
 dotenv.config();
 const API_PORT = process.env.API_PORT || 4000;
-const API_HOST = process.env.API_HOST || `localhost:${API_PORT}`;
+const API_HOST = process.env.API_HOST;
+const API_URL = process.env.API_HOST || `${API_HOST}:${API_PORT}`;
 
 const doc = {
   info: {
@@ -22,7 +23,7 @@ const doc = {
     title: "My Wallet API",
     description: "API to serve My Wallet app. A digital wallet",
   },
-  host: API_HOST,
+  host: API_URL,
   basePath: "/",
   schemes: ["http", "https"],
   consumes: ["application/json"],

@@ -2,11 +2,17 @@
 
 Back-end for My Wallet, a finance manager. :moneybag:
 
+![Cover ](./doc/cover-mockup.png)
+
 ## About
 
 My Wallet is a web browser application with which you can manage your personal expenses and income.
 
 You can access the front-end repository at [Front-End APP](https://github.com/victor-azevedo/front-mywallet)
+
+## Deploy
+
+You can access the application deploy [here](https://victor-dev-mywallet.vercel.app)
 
 ## How to run
 
@@ -66,7 +72,7 @@ A folder `data/` will be created as mongo container volume.
 
 ## Documentation
 
-The documentation can be access at end point `/docs` (e.g. `http://localhost:4000/docs/`)
+The documentation can be access at end point `/docs` (e.g. `https://my-wallet-api-7skt.onrender.com/docs/`)
 
 ![Sample Doc](./doc/image-doc-sample1.png)
 
