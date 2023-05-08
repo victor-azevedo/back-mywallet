@@ -18,9 +18,7 @@ app.use(cors());
 const jsonString = fs.readFileSync("swagger/swagger_output.json");
 const swaggerFile = JSON.parse(jsonString);
 var swaggerOptions = {
-  customCss: ".swagger-ui .topbar { display: none }",
   customSiteTitle: "My Wallet API Doc",
-  customfavIcon: "assets/favicon.ico",
 };
 
 app

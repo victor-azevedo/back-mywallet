@@ -5,7 +5,7 @@
     "title": "My Wallet API",
     "description": "API to serve My Wallet app. A digital wallet"
   },
-  "host": "localhost",
+  "host": "https://my-wallet-api-7skt.onrender.com",
   "basePath": "/",
   "schemes": [
     "http",

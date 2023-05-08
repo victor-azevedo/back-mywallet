@@ -15,7 +15,7 @@ import {
 dotenv.config();
 const API_PORT = process.env.API_PORT || 4000;
 const API_HOST = process.env.API_HOST;
-const API_URL = process.env.API_HOST || `${API_HOST}:${API_PORT}`;
+const API_URL = process.env.API_URL || `${API_HOST}:${API_PORT}`;
 
 const doc = {
   info: {
