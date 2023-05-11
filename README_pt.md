@@ -14,7 +14,7 @@ Você pode acessar o repositório do front-end em [Front-End APP](https://github
 
 ## Deploy
 
-Você pode acessar a aplicação [aqui](https://victor-dev-mywallet.vercel.app)
+Você pode acessar a aplicação [aqui](https://victor-dev-mywallet.vercel.app). Por favor, observe que, devido ao fato de ser um deploy gratuito, pode haver um tempo de carregamento mais longo ao iniciar a aplicação ⏳. Agradecemos sua paciência 🙏!
 
 ## Como executar
 
