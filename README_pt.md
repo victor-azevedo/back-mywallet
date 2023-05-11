@@ -4,7 +4,7 @@
 
 Back-end para o My Wallet, um gerenciador financeiro. :moneybag:
 
-![Capa](./doc/cover-mockup.png)
+![Capa ](/../../../front-mywallet/blob/main/doc/cover-mockup.png)
 
 ## Sobre
 

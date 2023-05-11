@@ -4,7 +4,7 @@
 
 Back-end for My Wallet, a finance manager. :moneybag:
 
-![Cover ](./doc/cover-mockup.png)
+![Cover ](/../../../front-mywallet/blob/main/doc/cover-mockup.png)
 
 ## About
 
